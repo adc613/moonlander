@@ -21,14 +21,27 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 
+
 enum layers {
     BASE,  // default layer
     SYMB,  // symbols
-    MDIA,  // media keys
+    NUM,  // media keys
 };
 
 enum custom_keycodes {
     VRSN = ML_SAFE_RANGE,
+    MOVEL,
+    MOVER,
+    S_1a,
+    S_2a,
+    S_3a,
+    S_4a,
+    S_5a,
+    S_6a,
+    S_7a,
+    S_8a,
+    S_9a,
+    S_0a,
 };
 
 enum functions {
@@ -36,17 +49,6 @@ enum functions {
   G_TAB,
   S_ENT,
   GUI_SPC,
-  S_1a,
-  S_2a,
-  S_3a,
-  S_4a,
-  S_5a,
-  S_6a,
-  S_7a,
-  S_8a,
-  S_9a,
-  S_0a,
-  TEST_1,
 };
 
 const uint16_t PROGMEM fn_actions[] = {
@@ -55,45 +57,35 @@ const uint16_t PROGMEM fn_actions[] = {
   [G_TAB] = ACTION_MODS_TAP_KEY(MOD_LGUI, KC_TAB),
   [S_ENT] = ACTION_MODS_TAP_KEY(MOD_RSFT, KC_ENT),
   [GUI_SPC] = ACTION_MODS_TAP_KEY(MOD_RGUI, KC_SPC),
-  [S_1a] = ACTION_MODS_KEY(MOD_LGUI, KC_1),
-  [S_2a] = ACTION_MODS_KEY(MOD_LGUI, KC_2),
-  [S_3a] = ACTION_MODS_KEY(MOD_LGUI, KC_3),
-  [S_4a] = ACTION_MODS_KEY(MOD_LGUI, KC_4),
-  [S_5a] = ACTION_MODS_KEY(MOD_LGUI, KC_5),
-  [S_6a] = ACTION_MODS_KEY(MOD_LGUI, KC_6),
-  [S_7a] = ACTION_MODS_KEY(MOD_LGUI, KC_7),
-  [S_8a] = ACTION_MODS_KEY(MOD_LGUI, KC_8),
-  [S_9a] = ACTION_MODS_KEY(MOD_LGUI, KC_9),
-  [S_0a] = ACTION_MODS_KEY(MOD_LGUI, KC_0),
 };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_moonlander(
         _______,  _______,    _______,    _______,    _______,    _______,    _______,     _______, _______,    _______,   _______,    _______,    _______,    _______,
-        F(G_TAB),  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______,                   _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-        F(ULTRA_KEY), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______,                _______,  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        KC_LSFT, KC_Z, KC_X,   KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLS, F(S_ENT),
-        _______,_______,_______,_______, _______,  LALT_T(KC_APP),                                  RCTL_T(KC_ESC),   _______,   _______, _______, _______, _______,
-                                            LT(SYMB, KC_LBRC),  KC_SPC, KC_LGUI,              KC_LALT,  KC_TAB,  KC_ENT
+        LGUI_T(KC_TAB),  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    _______,                   _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+        LCTL_T(KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    _______,                _______,  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+        KC_LSFT, KC_Z, KC_X,   KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_T(KC_ENT),
+        KC__MUTE,KC__VOLDOWN,KC__VOLUP,KC_MPLY, LT(SYMB, KC_LBRC),  MOVEL,                                  MOVER,   LT(NUM, KC_RBRC),   KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,
+                                            KC_SPC,  KC_LALT, KC_LGUI,              KC_RCTL,  KC_RALT,  RGUI_T(KC_ENT)
     ),
 
     [SYMB] = LAYOUT_moonlander(
         _______,  _______,    _______,    _______,    _______,    _______,    _______,     _______, _______,    _______,   _______,    _______,    _______,    _______,
-        _______, _______, _______,  KC_LPRN, KC_RPRN, _______,  _______,           _______, _______,   KC_PLUS,    _______,   _______,    _______, _______,
-        _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,           _______, KC_EQL, KC_MINS,    KC_LCBR,    KC_RCBR,    _______, KC_BSLS,
-        _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                             KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
-        _______, F(S_1a), F(S_2a), F(S_3a), F(S_3a),  F(S_4a),  F(S_5a),  _______, KC_DOT,  KC_0,    KC_EQL,  _______,
-                                            RGB_HUD, RGB_VAD, RGB_HUI, TOGGLE_LAYER_COLOR,_______, _______
+        _______, _______, _______,   _______, _______, _______, _______,           _______, _______,   KC_PLUS,    _______,   _______,    _______, _______,
+        _______, _______, _______,  KC_LPRN, KC_RPRN, _______,  _______,           _______, KC_EQL, KC_MINS,    KC_LCBR,    KC_RCBR,    _______, KC_BSLS,
+        _______, S_1a, S_2a, S_3a, S_4a, S_5a,                             S_6a, S_7a,    S_8a,    S_9a,    S_0a, _______,
+        _______, _______, _______, _______, _______,     _______,                   _______,    _______, _______,  _______,    _______,  _______,
+                                            _______, _______, _______,        _______,_______, _______
     ),
 
-    [MDIA] = LAYOUT_moonlander(
-        LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, RESET,
-        _______, _______, _______, KC_MS_U, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,           _______, _______, _______, _______, _______, _______, KC_MPLY,
-        _______, _______, _______, _______, _______, _______,                             _______, _______, KC_MPRV, KC_MNXT, _______, _______,
-        _______, _______, _______, KC_BTN1, KC_BTN2,         _______,            _______,          KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
-                                            _______, _______, _______,           _______, _______, _______
+    [NUM] = LAYOUT_moonlander(
+        _______,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        KC_GRV, KC_EXLM,  KC_AT, KC_HASH, KC_DLR, KC_PERC, _______,          _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+        KC_TILD, KC_1,    KC_2,    KC_3,    KC_4, KC_5,   _______,           _______, KC_6,     KC_7,    KC_8,   KC_9,    KC_0, KC_PIPE,
+        _______, S_1a, S_2a, S_3a, S_4a, S_5a,                         S_6a, S_7a,    S_8a,    S_9a,    S_0a, _______,
+        _______, _______, _______, _______, _______,         _______,            _______,          _______, _______, _______, _______, _______,
+                                            KC_UNDS, _______, _______,           _______, _______, _______
     ),
 };
 
@@ -102,6 +94,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         switch (keycode) {
         case VRSN:
             SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+            return false;
+        case MOVEL:
+            SEND_STRING (SS_DOWN(X_LGUI) SS_DOWN(X_LALT) SS_TAP(X_LEFT) SS_UP(X_LGUI) SS_UP(X_LALT));
+            return false;
+        case MOVER:
+            SEND_STRING (SS_DOWN(X_LGUI) SS_DOWN(X_LALT) SS_TAP(X_RIGHT) SS_UP(X_LGUI) SS_UP(X_LALT));
+            return false;
+        case S_1a:
+            SEND_STRING (SS_DOWN(X_LGUI) "1" SS_UP(X_LGUI));
+            return false;
+        case S_2a:
+            SEND_STRING (SS_DOWN(X_LGUI) "2" SS_UP(X_LGUI));
+            return false;
+        case S_3a:
+            SEND_STRING (SS_DOWN(X_LGUI) "3" SS_UP(X_LGUI));
+            return false;
+        case S_4a:
+            SEND_STRING (SS_DOWN(X_LGUI) "4" SS_UP(X_LGUI));
+            return false;
+        case S_5a:
+            SEND_STRING (SS_DOWN(X_LGUI) "5" SS_UP(X_LGUI));
+            return false;
+        case S_6a:
+            SEND_STRING (SS_DOWN(X_LGUI) "6" SS_UP(X_LGUI));
+            return false;
+        case S_7a:
+            SEND_STRING (SS_DOWN(X_LGUI) "7" SS_UP(X_LGUI));
+            return false;
+        case S_8a:
+            SEND_STRING (SS_DOWN(X_LGUI) "8" SS_UP(X_LGUI));
+            return false;
+        case S_9a:
+            SEND_STRING (SS_DOWN(X_LGUI) "9" SS_UP(X_LGUI));
+            return false;
+        case S_0a:
+            SEND_STRING (SS_DOWN(X_LGUI) "0" SS_UP(X_LGUI));
             return false;
         }
     }
